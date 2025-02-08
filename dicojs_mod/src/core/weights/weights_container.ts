@@ -1,74 +1,74 @@
-import { List } from 'immutable'
-type Weights = tf.Tensor[]
-import * as tf from '@tensorflow/tfjs'
+// import { List } from 'immutable'
+// type Weights = tf.Tensor[]
+// import * as tf from '@tensorflow/tfjs'
 
-/*
-All functions associated to WeightsContainer object used to handle weights of centroids in latent space.
-Used in all functions for aggregation scheme (/aggregation.ts).
-Frobenius norm function only for Byzantine robust aggregation method.
-*/
+// /*
+// All functions associated to WeightsContainer object used to handle weights of centroids in latent space.
+// Used in all functions for aggregation scheme (/aggregation.ts).
+// Frobenius norm function only for Byzantine robust aggregation method.
+// */
 
-export type TensorLike = tf.Tensor | ArrayLike<number>
+// export type TensorLike = tf.Tensor | ArrayLike<number>
 
-export class WeightsContainer {
-  private readonly _weights: List<tf.Tensor>
+// export class WeightsContainer {
+//   private readonly _weights: List<tf.Tensor>
 
-  constructor (weights: Iterable<TensorLike>) {
-    this._weights = List(weights).map((w) =>
-      w instanceof tf.Tensor ? w : tf.tensor(w))
-  }
+//   constructor (weights: Iterable<TensorLike>) {
+//     this._weights = List(weights).map((w) =>
+//       w instanceof tf.Tensor ? w : tf.tensor(w))
+//   }
 
-  get weights (): Weights {
-    return this._weights.toArray()
-  }
+//   get weights (): Weights {
+//     return this._weights.toArray()
+//   }
 
-  add (other: WeightsContainer): WeightsContainer {
-    return this.mapWith(other, tf.add)
-  }
+//   add (other: WeightsContainer): WeightsContainer {
+//     return this.mapWith(other, tf.add)
+//   }
 
-  sub (other: WeightsContainer): WeightsContainer {
-    return this.mapWith(other, tf.sub)
-  }
+//   sub (other: WeightsContainer): WeightsContainer {
+//     return this.mapWith(other, tf.sub)
+//   }
 
-  mapWith (other: WeightsContainer, fn: (a: tf.Tensor, b: tf.Tensor) => tf.Tensor): WeightsContainer {
-    return new WeightsContainer(
-      this._weights
-        .zip(other._weights)
-        .map(([w1, w2]) => fn(w1, w2))
-    )
-  }
+//   mapWith (other: WeightsContainer, fn: (a: tf.Tensor, b: tf.Tensor) => tf.Tensor): WeightsContainer {
+//     return new WeightsContainer(
+//       this._weights
+//         .zip(other._weights)
+//         .map(([w1, w2]) => fn(w1, w2))
+//     )
+//   }
 
-  map (fn: (t: tf.Tensor, i: number) => tf.Tensor): WeightsContainer
-  map (fn: (t: tf.Tensor) => tf.Tensor): WeightsContainer
-  map (fn: ((t: tf.Tensor) => tf.Tensor) | ((t: tf.Tensor, i: number) => tf.Tensor)): WeightsContainer {
-    return new WeightsContainer(this._weights.map(fn))
-  }
+//   map (fn: (t: tf.Tensor, i: number) => tf.Tensor): WeightsContainer
+//   map (fn: (t: tf.Tensor) => tf.Tensor): WeightsContainer
+//   map (fn: ((t: tf.Tensor) => tf.Tensor) | ((t: tf.Tensor, i: number) => tf.Tensor)): WeightsContainer {
+//     return new WeightsContainer(this._weights.map(fn))
+//   }
 
-  reduce (fn: (acc: tf.Tensor, t: tf.Tensor) => tf.Tensor): tf.Tensor {
-    return this._weights.reduce(fn)
-  }
+//   reduce (fn: (acc: tf.Tensor, t: tf.Tensor) => tf.Tensor): tf.Tensor {
+//     return this._weights.reduce(fn)
+//   }
 
-  get (index: number): tf.Tensor | undefined {
-    return this._weights.get(index)
-  }
+//   get (index: number): tf.Tensor | undefined {
+//     return this._weights.get(index)
+//   }
 
-  frobeniusNorm (): number {
-    return Math.sqrt(this.map((w) => w.square().sum()).reduce((a, b) => a.add(b)).dataSync()[0])
-  }
+//   frobeniusNorm (): number {
+//     return Math.sqrt(this.map((w) => w.square().sum()).reduce((a, b) => a.add(b)).dataSync()[0])
+//   }
 
-  static of (...weights: TensorLike[]): WeightsContainer {
-    return new this(weights)
-  }
+//   static of (...weights: TensorLike[]): WeightsContainer {
+//     return new this(weights)
+//   }
 
-  static from (model: tf.LayersModel): WeightsContainer {
-    return new this(model.weights.map((w) => w.read()))
-  }
+//   static from (model: tf.LayersModel): WeightsContainer {
+//     return new this(model.weights.map((w) => w.read()))
+//   }
 
-  static add (a: Iterable<TensorLike>, b: Iterable<TensorLike>): WeightsContainer {
-    return new this(a).add(new this(b))
-  }
+//   static add (a: Iterable<TensorLike>, b: Iterable<TensorLike>): WeightsContainer {
+//     return new this(a).add(new this(b))
+//   }
 
-  static sub (a: Iterable<TensorLike>, b: Iterable<TensorLike>): WeightsContainer {
-    return new this(a).sub(new this(b))
-  }
-}
+//   static sub (a: Iterable<TensorLike>, b: Iterable<TensorLike>): WeightsContainer {
+//     return new this(a).sub(new this(b))
+//   }
+// }

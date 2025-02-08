@@ -8,7 +8,7 @@ import * as tf from '@tensorflow/tfjs'
 
 
 import { AsyncInformant } from '../../../dicojs_mod/src/core/async_informant.js'
-import { TaskID } from '../../../dicojs_mod/src/core/task/task.js'
+import { TaskID } from '../../../dicojs_mod/src/core/task/index.js'
 import { AsyncBuffer } from '../../../dicojs_mod/src/core/async_buffer.js'
 import { encodeCentroids, decodeCentroids } from '../../../dicojs_mod/src/msf/serialization/weights.js'
 import { antibiogo } from '../../../dicojs_mod/src/msf/task.js'
@@ -96,7 +96,7 @@ export class AntibiogoFederated {
     this.ownRouter.get('/pca', (req, res) => this.performPCAWithContributions(req, res))
 
     this.ownRouter.get('/centroids', (req, res) => this.getClientContributions(req, res))
-    this.ownRouter.get('/', (_, res) => res.send(this.description + '\n'))
+    // this.ownRouter.get('/', (_, res) => res.send(this.description + '\n'))
 
     // Add API for discard function
     this.ownRouter.get('/discard', async (req, res) => {

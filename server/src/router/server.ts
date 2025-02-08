@@ -4,7 +4,7 @@ import WebSocket from 'ws'
 
 import { antibiogo } from '../../../dicojs_mod/src/msf/task.js'
 
-import { Task } from '../../../dicojs_mod/src/core/task/task.js'
+import { Task } from '../../../dicojs_mod/src/core/task/index.js'
 
 import * as tf from '@tensorflow/tfjs'
 
@@ -21,7 +21,7 @@ export abstract class Server {
     this.ownRouter = express.Router()
     wsApplier.applyTo(this.ownRouter)
 
-    this.ownRouter.get('/', (_, res) => res.send(this.description + '\n'))
+    // this.ownRouter.get('/', (_, res) => res.send(this.description + '\n'))
   }
 
   public get router (): express.Router {

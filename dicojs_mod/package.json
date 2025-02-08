@@ -29,8 +29,7 @@
   "homepage": "https://github.com/epfml/disco#readme",
   "dependencies": {
     "@koush/wrtc": "0.5",
-    "@tensorflow/tfjs": "4.1.0",
-    "@tensorflow/tfjs-node": "4.1.0",
+    "@tensorflow/tfjs": "4",
     "@types/chai": "^5.0.1",
     "@types/msgpack-lite": "0.1",
     "axios": "^1.2.1",
@@ -47,6 +46,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.4",
+    "@tensorflow/tfjs-node": "4",
     "@types/mocha": "^10.0.0",
     "@types/simple-peer": "9",
     "@types/uuid": "8",

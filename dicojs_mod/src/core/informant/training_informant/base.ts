@@ -1,6 +1,6 @@
 import { List, Set } from 'immutable'
 
-import { Task } from '../../task/task.js'
+import { Task } from '../../task/index.js'
 import { GraphInformant } from '../graph_informant.js'
 
 export abstract class Base {

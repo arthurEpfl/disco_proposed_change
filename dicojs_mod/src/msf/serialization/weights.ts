@@ -2,7 +2,8 @@ import * as msgpack from 'msgpack-lite'
 
 import * as tf from '@tensorflow/tfjs'
 import { weights as serialization } from '../../core/serialization/index.js'
-import { WeightsContainer } from '../../core/weights/weights_container.js'
+import { WeightsContainer } from '../../core/weights/index.js'
+// import { WeightsContainer } from '../../../../disco/discojs/src/weights/index.js';
 import { Centroids } from '../weights/centroids.js'
 
 /*

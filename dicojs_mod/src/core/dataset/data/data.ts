@@ -1,21 +1,21 @@
-import { Task } from '../../task/task.js'
-import { Dataset } from '../dataset.js'
+// import { Task } from '../../task/task.js'
+// import { Dataset } from '../dataset.js'
 
-export abstract class Data {
-  protected constructor (
-    public readonly dataset: Dataset,
-    public readonly task: Task,
-    public readonly size?: number) {}
+// export abstract class Data {
+//   protected constructor (
+//     public readonly dataset: Dataset,
+//     public readonly task: Task,
+//     public readonly size?: number) {}
 
-  static async init (
-    dataset: Dataset,
-    task: Task,
-    size?: number
-  ): Promise<Data> {
-    throw new Error('abstract')
-  }
+//   static async init (
+//     dataset: Dataset,
+//     task: Task,
+//     size?: number
+//   ): Promise<Data> {
+//     throw new Error('abstract')
+//   }
 
-  abstract batch (): Data
+//   abstract batch (): Data
 
-  abstract preprocess (): Data
-}
+//   abstract preprocess (): Data
+// }

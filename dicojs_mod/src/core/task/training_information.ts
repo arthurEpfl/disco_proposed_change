@@ -1,4 +1,4 @@
-import { Preprocessing } from '../dataset/data/preprocessing.js'
+// import { Preprocessing } from '../dataset/data/preprocessing.js'
 import { isModelCompileData, ModelCompileData } from './model_compile_data.js'
 
 export function isTrainingInformation (raw: unknown): raw is TrainingInformation {
@@ -138,7 +138,7 @@ export interface TrainingInformation {
   // batchSize: batch size of training data
   batchSize: number
   // preprocessingFunctions: preprocessing functions such as resize and normalize
-  preprocessingFunctions?: Preprocessing[]
+  // preprocessingFunctions?: Preprocessing[]
   // modelCompileData: interface of additional training information (optimizer, loss and metrics)
   modelCompileData: ModelCompileData
   // dataType, e.g. image or tabular

@@ -1,6 +1,6 @@
-import { Data } from './data.js'
+// import { Data } from './data.js'
 
-export interface DataSplit {
-  train: Data
-  validation?: Data
-}
+// export interface DataSplit {
+//   train: Data
+//   validation?: Data
+// }

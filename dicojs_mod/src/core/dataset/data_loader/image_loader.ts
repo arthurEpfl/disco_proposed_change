@@ -1,110 +1,110 @@
-import { Range } from 'immutable'
+// import { Range } from 'immutable'
 
-import * as tf from '@tensorflow/tfjs'
-import { Dataset } from '../dataset.js'
-import { Data } from '../data/data.js'
-import { DataSplit } from '../data/data_split.js'
-import { ImageData } from '../data/image_data.js'
-import { DataLoader, DataConfig } from './data_loader.js'
+// import * as tf from '@tensorflow/tfjs'
+// import { Dataset } from '../dataset.js'
+// import { Data } from '../data/data.js'
+// import { DataSplit } from '../data/data_split.js'
+// import { ImageData } from '../data/image_data.js'
+// import { DataLoader, DataConfig } from './data_loader.js'
 
 
-/**
- * TODO @s314cy:
- * Load labels and correctly match them with their respective images, with the following constraints:
- * 1. Images are given as 1 image/1 file
- * 2. Labels are given as multiple labels/1 file, each label file can contain a different amount of labels
- */
-export abstract class ImageLoader<Source> extends DataLoader<Source> {
-  abstract readImageFrom (source: Source): Promise<tf.Tensor3D>
+// /**
+//  * TODO @s314cy:
+//  * Load labels and correctly match them with their respective images, with the following constraints:
+//  * 1. Images are given as 1 image/1 file
+//  * 2. Labels are given as multiple labels/1 file, each label file can contain a different amount of labels
+//  */
+// export abstract class ImageLoader<Source> extends DataLoader<Source> {
+//   abstract readImageFrom (source: Source): Promise<tf.Tensor3D>
 
-  async load (image: Source, config?: DataConfig): Promise<Dataset> {
-    let tensorContainer: tf.TensorContainer
-    if (config === undefined || config.labels === undefined) {
-      tensorContainer = await this.readImageFrom(image)
-    } else {
-      tensorContainer = {
-        xs: await this.readImageFrom(image),
-        ys: config.labels[0]
-      }
-    }
-    return tf.data.array([tensorContainer])
-  }
+//   async load (image: Source, config?: DataConfig): Promise<Dataset> {
+//     let tensorContainer: tf.TensorContainer
+//     if (config === undefined || config.labels === undefined) {
+//       tensorContainer = await this.readImageFrom(image)
+//     } else {
+//       tensorContainer = {
+//         xs: await this.readImageFrom(image),
+//         ys: config.labels[0]
+//       }
+//     }
+//     return tf.data.array([tensorContainer])
+//   }
 
-  private async buildDataset (images: Source[], labels: number[], indices: number[], config?: DataConfig): Promise<Data> {
-    const dataset: tf.data.Dataset<tf.TensorContainer> = tf.data.generator(() => {
-      const withLabels = config?.labels !== undefined
+//   private async buildDataset (images: Source[], labels: number[], indices: number[], config?: DataConfig): Promise<Data> {
+//     const dataset: tf.data.Dataset<tf.TensorContainer> = tf.data.generator(() => {
+//       const withLabels = config?.labels !== undefined
 
-      let index = 0
-      const iterator = {
-        next: async () => {
-          if (index === indices.length) {
-            return { done: true }
-          }
-          const sample = await this.readImageFrom(images[indices[index]])
-          const label = withLabels ? labels[indices[index]] : undefined
-          const value = withLabels ? { xs: sample, ys: label } : sample
+//       let index = 0
+//       const iterator = {
+//         next: async () => {
+//           if (index === indices.length) {
+//             return { done: true }
+//           }
+//           const sample = await this.readImageFrom(images[indices[index]])
+//           const label = withLabels ? labels[indices[index]] : undefined
+//           const value = withLabels ? { xs: sample, ys: label } : sample
 
-          index++
+//           index++
 
-          return {
-            value,
-            done: false
-          }
-        }
-      }
-      return iterator as unknown as Iterator<tf.Tensor> // Lazy
-    })
+//           return {
+//             value,
+//             done: false
+//           }
+//         }
+//       }
+//       return iterator as unknown as Iterator<tf.Tensor> // Lazy
+//     })
 
-    return await ImageData.init(dataset, this.task, indices.length)
-  }
+//     return await ImageData.init(dataset, this.task, indices.length)
+//   }
   
 
-  async loadAll (images: Source[], config?: DataConfig): Promise<DataSplit> {
-    let labels: number[] = []
-    const indices = Range(0, images.length).toArray()
-    if (config?.labels !== undefined) {
-      // For some reason, task still old def??? So LABEL_LIST not avaliable
-      // Give mock number for now
-      // const numberOfClasses = this.task.trainingInformation?.LABEL_LIST?.length
-      const numberOfClasses = 2
-      if (numberOfClasses === undefined) {
-        throw new Error('wanted labels but none found in task')
-      }
+//   async loadAll (images: Source[], config?: DataConfig): Promise<DataSplit> {
+//     let labels: number[] = []
+//     const indices = Range(0, images.length).toArray()
+//     if (config?.labels !== undefined) {
+//       // For some reason, task still old def??? So LABEL_LIST not avaliable
+//       // Give mock number for now
+//       // const numberOfClasses = this.task.trainingInformation?.LABEL_LIST?.length
+//       const numberOfClasses = 2
+//       if (numberOfClasses === undefined) {
+//         throw new Error('wanted labels but none found in task')
+//       }
 
-      labels = tf.oneHot(tf.tensor1d(config.labels, 'int32'), numberOfClasses).arraySync() as number[]
-    }
-    if (config?.shuffle === undefined || config?.shuffle) {
-      this.shuffle(indices)
-    }
+//       labels = tf.oneHot(tf.tensor1d(config.labels, 'int32'), numberOfClasses).arraySync() as number[]
+//     }
+//     if (config?.shuffle === undefined || config?.shuffle) {
+//       this.shuffle(indices)
+//     }
 
-    if (config?.validationSplit === undefined || config?.validationSplit === 0) {
-      const dataset = await this.buildDataset(images, labels, indices, config)
-      return {
-        train: dataset,
-        validation: undefined
-      }
-    }
+//     if (config?.validationSplit === undefined || config?.validationSplit === 0) {
+//       const dataset = await this.buildDataset(images, labels, indices, config)
+//       return {
+//         train: dataset,
+//         validation: undefined
+//       }
+//     }
 
-    const trainSize = Math.floor(images.length * (1 - config.validationSplit))
+//     const trainSize = Math.floor(images.length * (1 - config.validationSplit))
 
-    const trainIndices = indices.slice(0, trainSize)
-    const valIndices = indices.slice(trainSize)
+//     const trainIndices = indices.slice(0, trainSize)
+//     const valIndices = indices.slice(trainSize)
 
-    const trainDataset = await this.buildDataset(images, labels, trainIndices, config)
-    const valDataset = await this.buildDataset(images, labels, valIndices, config)
+//     const trainDataset = await this.buildDataset(images, labels, trainIndices, config)
+//     const valDataset = await this.buildDataset(images, labels, valIndices, config)
 
-    return {
-      train: trainDataset,
-      validation: valDataset
-    }
-  }
+//     return {
+//       train: trainDataset,
+//       validation: valDataset
+//     }
+//   }
 
-  shuffle (array: number[]): void {
-    for (let i = 0; i < array.length; i++) {
-      const j = Math.floor(Math.random() * i)
-      const swap = array[i]
-      array[i] = array[j]
-      array[j] = swap
-    }
-  }
-}
+//   shuffle (array: number[]): void {
+//     for (let i = 0; i < array.length; i++) {
+//       const j = Math.floor(Math.random() * i)
+//       const swap = array[i]
+//       array[i] = array[j]
+//       array[j] = swap
+//     }
+//   }
+// }

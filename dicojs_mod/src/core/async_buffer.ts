@@ -1,7 +1,7 @@
 import { Map } from 'immutable'
 
 import { AsyncInformant } from './async_informant.js'
-import { TaskID } from './task/task.js'
+import { TaskID } from './task/index.js'
 
 /*
  * The AsyncWeightsBuffer class holds and manipulates information about the

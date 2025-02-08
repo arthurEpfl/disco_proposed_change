@@ -5,13 +5,15 @@ import * as messages from '../../../core/client/federated/messages.js'
 import { privacy } from '../../../core/index.js'
 import { informant } from '../../../core/informant/index.js'
 import { type, clientConnected } from '../../../core/client/messages.js'
+// import { ClientConnected } from '../../../../../disco/discojs/src/client/messages.js';
+// import { type } from '../../../../../disco/discojs/src/client/messages.js'
 import { EventConnection, waitMessageWithTimeout, WebSocketServer } from '../../../core/client/event_connection.js'
 import { MAX_WAIT_PER_ROUND } from '../../../core/client/utils.js'
 import { Centroids } from '../../weights/centroids.js'
 import { decodeCentroids, encodeCentroids } from '../../serialization/weights.js'
 import { antibiogo } from '../../task.js'
 
-import { Task } from '../../../core/task/task.js'
+import { Task } from '../../../core/task/index.js'
 
 /*
 Class that deals with communication with the centralized server when training a specific task in the federated setting.

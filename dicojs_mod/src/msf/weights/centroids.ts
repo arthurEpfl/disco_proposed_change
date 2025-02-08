@@ -1,5 +1,7 @@
 import { List } from 'immutable'
-import { WeightsContainer } from '../../core/weights/weights_container.js'
+import { WeightsContainer } from '../../core/weights/index.js'
+// import { WeightsContainer } from '../../../../disco/discojs/src/weights/index.js';
+
 import * as tf from '@tensorflow/tfjs'
 
 /*

@@ -1,5 +1,7 @@
-import { WeightsContainer } from './weights/weights_container.js'
-import { Task } from './task/task.js'
+import { WeightsContainer } from './weights/index.js'
+// import { WeightsContainer } from '../../../disco/discojs/src/weights/index.js';
+
+import { Task } from './task/index.js'
 
 import * as tf from '@tensorflow/tfjs'
 
@@ -19,30 +21,32 @@ export function addDifferentialPrivacy (updatedWeights: WeightsContainer, staleW
 
   const weightsDiff = updatedWeights.sub(staleWeights)
   let newWeightsDiff: WeightsContainer
+  newWeightsDiff = updatedWeights
 
-  if (clippingRadius !== undefined) {
-    // Frobenius norm
-    const norm = weightsDiff.frobeniusNorm()
+  // if (clippingRadius !== undefined) {
+  //   // Frobenius norm
+  //   // const norm = weightsDiff.frobeniusNorm()
 
-    newWeightsDiff = weightsDiff.map((w) => {
-      const clipped = w.div(Math.max(1, norm / clippingRadius))
-      if (noiseScale !== undefined) {
-        // Add clipping and noise
-        const noise = tf.randomNormal(w.shape, 0, (noiseScale * noiseScale) * (clippingRadius * clippingRadius))
-        return clipped.add(noise)
-      } else {
-        // Add clipping without any noise
-        return clipped
-      }
-    })
-  } else {
-    if (noiseScale !== undefined) {
-      // Add noise without any clipping
-      newWeightsDiff = weightsDiff.map((w) => tf.randomNormal(w.shape, 0, (noiseScale * noiseScale)))
-    } else {
-      return updatedWeights
-    }
-  }
+  //   newWeightsDiff = weightsDiff.map((w) => {
+  //     const clipped = w.div(Math.max(1, norm / clippingRadius))
+  //     if (noiseScale !== undefined) {
+  //       // Add clipping and noise
+  //       const noise = tf.randomNormal(w.shape, 0, (noiseScale * noiseScale) * (clippingRadius * clippingRadius))
+  //       return clipped.add(noise)
+  //     } else {
+  //       // Add clipping without any noise
+  //       return clipped
+  //     }
+  //   })
+  // } else {
+  //   if (noiseScale !== undefined) {
+  //     // Add noise without any clipping
+  //     newWeightsDiff = weightsDiff.map((w) => tf.randomNormal(w.shape, 0, (noiseScale * noiseScale)))
+  //   } else {
+  //     return updatedWeights
+  //   }
+  // }
+
 
   return staleWeights.add(newWeightsDiff)
 }

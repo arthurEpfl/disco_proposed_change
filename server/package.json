@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@koush/wrtc": "0.5",
-    "@tensorflow/tfjs": "4.1.0",
+    "@tensorflow/tfjs": "4",
     "axios": "^1.2.1",
     "cors": "2",
     "epfl-antibiogo-lib": "file:../discojs",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/chai": "4",
+    "@tensorflow/tfjs-node": "4",
     "@types/cors": "2",
     "@types/express-ws": "3",
     "@types/mocha": "9",

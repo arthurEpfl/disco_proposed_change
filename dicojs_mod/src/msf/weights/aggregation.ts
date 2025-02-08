@@ -2,8 +2,6 @@ import { List } from 'immutable'
 
 import { aggregation } from '../../core/weights/index.js'
 import { Centroids, CentroidEntry, fromEntries, toEntries } from './centroids.js'
-import { cos } from '@tensorflow/tfjs'
-import { WeightsContainer } from '../../core/weights/weights_container.js'
 
 /*
 Functions to get new centroids aggregated on client side.

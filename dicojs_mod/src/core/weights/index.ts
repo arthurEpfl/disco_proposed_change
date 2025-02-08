@@ -1,2 +1,4 @@
-export { WeightsContainer } from './weights_container.js'
-export * as aggregation from './aggregation.js'
+// DISCO aggregation and WeightsContainer components
+
+export { WeightsContainer } from '../../../../disco/discojs/src/weights/index.js';
+export { aggregation } from '../../../../disco/discojs/src/weights/index.js';

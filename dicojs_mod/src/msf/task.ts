@@ -1,5 +1,5 @@
 import { data } from '../core/index.js'
-import { Task } from '../core/task/task.js'
+import { Task, DataType } from '../core/task/index.js'
 
 // All info associated to antibiogo task, every task defined unqiquely in DISCO.
 
@@ -9,7 +9,7 @@ export const antibiogo: Task = {
     modelID: 'antibiogo-model',
     batchSize: 4,
     epochs: 0,
-    preprocessingFunctions: [data.ImagePreprocessing.Resize],
+    // preprocessingFunctions: [data.ImagePreprocessing.Resize],
     LABEL_LIST: ['0', '1'],
     validationSplit: 0,
     roundDuration: 5,

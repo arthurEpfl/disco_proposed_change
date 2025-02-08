@@ -1,6 +1,7 @@
 import { List, Map } from 'immutable'
 import * as tf from '@tensorflow/tfjs'
-import { WeightsContainer } from '../../core/weights/weights_container.js'
+import { WeightsContainer } from '../../core/weights/index.js'
+// import { WeightsContainer } from '../../../../disco/discojs/src/weights/index.js';
 import { informant } from '../../core/informant/index.js'
 import { Centroids } from '../weights/centroids.js'
 
