@@ -1,6 +1,6 @@
 # Local Prototypical Federated Learning Scheme
 
-Same instructions as for the antibiogo_localwork repository.
+Same instructions as for the antibiogo_localwork repository. Also need to run npm install in disco/.
 
 # DISCO repository import
 The Disco repository is added as a submodule due to technical reasons (errors when using DISCO as a module in the npm register). 
