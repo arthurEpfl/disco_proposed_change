@@ -1,7 +1,7 @@
 import { WeightsContainer } from './weights/index.js'
 // import { WeightsContainer } from '../../../disco/discojs/src/weights/index.js';
 
-import { Task } from './task/index.js'
+import { Task, DataType } from './task/index.js'
 
 import * as tf from '@tensorflow/tfjs'
 
@@ -15,9 +15,9 @@ import * as tf from '@tensorflow/tfjs'
  * @returns the noised weights for the current round
  */
 
-export function addDifferentialPrivacy (updatedWeights: WeightsContainer, staleWeights: WeightsContainer, task: Task): WeightsContainer {
-  const noiseScale = task.trainingInformation?.noiseScale
-  const clippingRadius = task.trainingInformation?.clippingRadius
+export function addDifferentialPrivacy (updatedWeights: WeightsContainer, staleWeights: WeightsContainer, task: Task<DataType>): WeightsContainer {
+  // const noiseScale = task.trainingInformation?.noiseScale
+  // const clippingRadius = task.trainingInformation?.clippingRadius
 
   const weightsDiff = updatedWeights.sub(staleWeights)
   let newWeightsDiff: WeightsContainer

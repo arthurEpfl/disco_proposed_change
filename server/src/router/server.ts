@@ -4,7 +4,7 @@ import WebSocket from 'ws'
 
 import { antibiogo } from '../../../dicojs_mod/src/msf/task.js'
 
-import { Task } from '../../../dicojs_mod/src/core/task/index.js'
+import { Task, DataType } from '../../../dicojs_mod/src/core/task/index.js'
 
 import * as tf from '@tensorflow/tfjs'
 
@@ -29,7 +29,7 @@ export abstract class Server {
   }
 
   protected isValidTask (taskId: string): boolean {
-    return taskId === antibiogo.taskID
+    return taskId === antibiogo.id
   }
 
   protected isValidClientId (clientId: string): boolean {
@@ -44,12 +44,12 @@ export abstract class Server {
 
   protected abstract get description (): string
 
-  protected abstract buildRoute (task: Task): string
+  protected abstract buildRoute (task: Task<DataType>): string
 
-  protected abstract initTask (task: Task, model: tf.LayersModel): void
+  protected abstract initTask (task: Task<DataType>, model: tf.LayersModel): void
 
   protected abstract handle (
-    task: Task,
+    task: Task<DataType>,
     ws: WebSocket,
     model: tf.LayersModel,
     req: express.Request,

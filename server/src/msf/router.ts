@@ -188,7 +188,7 @@ export class AntibiogoFederated {
   }
 
   protected initTask (): void {
-    this.tasksStatus = this.tasksStatus.set(antibiogo.taskID, {
+    this.tasksStatus = this.tasksStatus.set(antibiogo.id, {
       isRoundPending: false,
       round: 0
     })
@@ -209,7 +209,7 @@ export class AntibiogoFederated {
     console.log('Initializing task with tauPercentile cahnged:', tauPercentile);
 
     const buffer = new AsyncBuffer<Centroids>(
-      antibiogo.taskID,
+      antibiogo.id,
       async (centroids: Iterable<Centroids>) =>
         this.aggregateAndStoreCentroids(List(centroids), tauPercentile)
     )
@@ -387,7 +387,7 @@ export class AntibiogoFederated {
 
     this.logs = this.logs.push({
       timestamp: new Date(),
-      task: antibiogo.taskID,
+      task: antibiogo.id,
       round,
       client: clientId,
       request: type

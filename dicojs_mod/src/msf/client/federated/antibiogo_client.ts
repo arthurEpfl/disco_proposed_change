@@ -13,7 +13,7 @@ import { Centroids } from '../../weights/centroids.js'
 import { decodeCentroids, encodeCentroids } from '../../serialization/weights.js'
 import { antibiogo } from '../../task.js'
 
-import { Task } from '../../../core/task/index.js'
+import { Task, DataType } from '../../../core/task/index.js'
 
 /*
 Class that deals with communication with the centralized server when training a specific task in the federated setting.
@@ -21,7 +21,7 @@ Class contains functions all for establishing and ending connection between clie
 */
 export class AntibiogoClient {
   protected connected = false
-  public readonly task: Task = antibiogo
+  public readonly task: Task<DataType> = antibiogo
 
   constructor (
     public readonly url: URL
@@ -226,7 +226,7 @@ export class AntibiogoClient {
     if (!url.pathname.endsWith('/')) {
       url.pathname += '/'
     }
-    url.pathname += `tasks/${this.task.taskID}`
+    url.pathname += `tasks/${this.task.id}`
     const response = await axios.get(url.href)
 
     return decodeCentroids(response.data)

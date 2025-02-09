@@ -19,7 +19,7 @@ export class Tasks {
   constructor() {
     this.ownRouter = express.Router();
 
-    this.ownRouter.get(`/${antibiogo.taskID}`, async (_, res) => {
+    this.ownRouter.get(`/${antibiogo.id}`, async (_, res) => {
       try {
         const centroids = readFromCsv(CONFIG.prototypicalPath);
         console.log('Original Centroids:', centroids);

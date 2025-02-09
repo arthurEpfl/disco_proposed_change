@@ -1,6 +1,6 @@
 import { List, Set } from 'immutable'
 
-import { Task } from '../../task/index.js'
+import { Task, DataType } from '../../task/index.js'
 import { GraphInformant } from '../graph_informant.js'
 
 export abstract class Base {
@@ -18,7 +18,7 @@ export abstract class Base {
   protected averageNumberOfParticipants = 0
 
   constructor (
-    public readonly task: Task,
+    public readonly task: Task<DataType>,
     private readonly nbrMessagesToShow: number = 10
   ) {}
 
