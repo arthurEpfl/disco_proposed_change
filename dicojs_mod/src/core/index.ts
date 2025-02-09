@@ -6,7 +6,6 @@ export { GraphInformant } from './informant/graph_informant.js'
 
 export * as client from './client/index.js'
 
-// export { WeightsContainer } from './weights/weights_container.js'
 export { WeightsContainer, aggregation } from './weights/index.js'
 export { AsyncBuffer } from './async_buffer.js'
 export { AsyncInformant } from './async_informant.js'
