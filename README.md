@@ -2,6 +2,8 @@
 
 Same instructions as for the antibiogo_localwork repository. Also need to run npm install in disco/. If disco doesn't load/appear after pulling, you can simply clone from https://github.com/epfml/disco, at the root.
 
+Note: errors will display in the terminal at /dicojs_mod after the test has sent client embeddings to central server, they do not fail the test and are linked to components of main disco repository.
+
 # DISCO repository import
 The Disco repository is added as a submodule due to technical reasons (errors when using DISCO as a module in the npm register). 
 
