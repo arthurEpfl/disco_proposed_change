@@ -20,3 +20,5 @@ The following elements were removed, they are irrelevant in the use case of prot
 
  - core/dataset: removed components to load and preprocess image data.
  - core/serialialization/model.ts: removed encoding components for gpt-tfjs models.
+
+Note: For elements removed, everything has been commented to show what has been removed, for updates, comment of old import path to the one referencing current disco to show difference.
